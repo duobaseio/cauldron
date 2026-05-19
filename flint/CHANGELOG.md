@@ -1,3 +1,13 @@
+## 2.15.0 (19/05/2026)
+Core ruleset:
+- Add `omit_obvious_local_variable_types`
+- Add `simple_directive_paths`
+- Add `simplify_variable_pattern`
+- Add `var_with_no_type_annotation`
+- Remove `avoid_null_checks_in_equality_operators`
+- Remove `use_if_null_to_convert_nulls_to_bools`
+
+
 ## 2.14.0 (19/08/2025)
 This update focuses on lint rules introduced in Dart 3.9.0.
 
