@@ -27,11 +27,11 @@ jobs:
       run:
         working-directory: sugar
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2.21.0
       - run: dart pub get
       - run: dart run coverage:test_with_coverage --test  .\integration_test\src\time\zone\platform\platform_provider_test.dart
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         with:
           files: ./sugar/coverage/lcov.info
 
@@ -42,12 +42,12 @@ jobs:
       run:
         working-directory: sugar
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2.21.0
       - run: dart pub get
       - run: chmod +x ./integration_test/src/time/zone/platform/platform_provider_test_macos.sh
       - run: ./integration_test/src/time/zone/platform/platform_provider_test_macos.sh
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         with:
           files: ./sugar/coverage/lcov.info
 
@@ -58,12 +58,12 @@ jobs:
       run:
         working-directory: sugar
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2.21.0
       - run: dart pub get
       - run: chmod +x ./integration_test/src/time/zone/platform/platform_provider_test_linux.sh
       - run: ./integration_test/src/time/zone/platform/platform_provider_test_linux.sh
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         with:
           files: ./sugar/coverage/lcov.info
 
@@ -74,7 +74,7 @@ jobs:
       run:
         working-directory: sugar
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: stable
@@ -85,6 +85,6 @@ jobs:
       - run: dart pub get
       - run: chmod +x ./integration_test/src/time/zone/platform/platform_provider_test_browser.sh
       - run: ./integration_test/src/time/zone/platform/platform_provider_test_browser.sh
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         with:
           files: ./sugar/coverage/lcov.info
