@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: pr-metadata
           path: ./pr-metadata
@@ -27,7 +27,7 @@ jobs:
 
       - id: download-patch
         continue-on-error: true
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: format-changes
           path: ./
@@ -44,14 +44,14 @@ jobs:
           fi
 
       - if: steps.check-changes.outputs.changes == 'true'
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         id: generate-token
         with:
           app-id: ${{ secrets.AUTO_MAID_APP_ID }}
           private-key: ${{ secrets.AUTO_MAID_PRIVATE_KEY }}
 
       - if: steps.check-changes.outputs.changes == 'true'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           token: ${{ steps.generate-token.outputs.token }}
           repository: ${{ steps.pr-metadata.outputs.pr_head_repo }}
@@ -64,7 +64,7 @@ jobs:
           rm changes.patch
 
       - if: steps.check-changes.outputs.changes == 'true'
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v11
         with:
           pull: '--rebase --autostash'
           message: 'Prepare Sugar for review'
