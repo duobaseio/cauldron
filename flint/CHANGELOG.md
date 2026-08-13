@@ -1,3 +1,10 @@
+## 2.16.2 (13/08/2026)
+
+Core ruleset:
+- Remove `no_dynamic_casts`
+- Remove `unnecessary_null_checks`
+
+
 ## 2.16.1 (13/08/2026)
 
 Remove duplicate `no_runtimetype_tostring` entry.
