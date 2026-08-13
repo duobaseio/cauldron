@@ -1,3 +1,23 @@
+## 2.16.0 (13/08/2026)
+This update focuses on lint rules introduced in Dart 3.13.0. It requires Dart 3.13.0 or above.
+
+Core ruleset:
+- Add `empty_container_bodies`
+- Add `initialize_in_field_declaration`
+- Add `migrate_design_widgets`
+- Add `no_dynamic_casts`
+- Add `no_raw_types`
+- Add `no_runtimetype_tostring`
+- Add `unnecessary_const_in_enum_constructor`
+- Add `unnecessary_null_checks`
+- Add `unnecessary_primary_constructor_body`
+- Add `unnecessary_type_name_in_constructor`
+- Add `use_declaring_parameters`
+- Remove `avoid_private_typedef_functions`
+- Remove `one_member_abstracts`
+- Remove `unnecessary_await_in_return`
+
+
 ## 2.15.0 (19/05/2026)
 Core ruleset:
 - Add `omit_obvious_local_variable_types`

@@ -25,7 +25,6 @@ linter:
     - avoid_multiple_declarations_per_line
     - avoid_positional_boolean_parameters
     - avoid_print
-    - avoid_private_typedef_functions
     - avoid_redundant_argument_values
     - avoid_relative_lib_imports
     - avoid_return_types_on_setters
@@ -62,6 +61,7 @@ linter:
     - do_not_use_environment
     - empty_catches
     - empty_constructor_bodies
+    - empty_container_bodies
     - empty_statements
     - eol_at_end_of_file
     - exhaustive_cases
@@ -69,6 +69,7 @@ linter:
     - hash_and_equals
     - implementation_imports
     - implicit_call_tearoffs
+    - initialize_in_field_declaration
     - invalid_runtime_check_with_js_interop_types
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
@@ -78,14 +79,18 @@ linter:
     - library_private_types_in_public_api
     - literal_only_boolean_expressions
     - matching_super_parameters
+    - migrate_design_widgets
     - missing_code_block_language_in_doc_comment
     - missing_whitespace_between_adjacent_strings
     - no_adjacent_strings_in_list
     - no_duplicate_case_values
+    - no_dynamic_casts
     - no_leading_underscores_for_library_prefixes
     - no_leading_underscores_for_local_identifiers
     - no_literal_bool_comparisons
+    - no_raw_types
     - no_runtimeType_toString
+    - no_runtimetype_tostring
     - no_self_assignments
     - no_wildcard_variable_uses
     - non_constant_identifier_names
@@ -93,7 +98,6 @@ linter:
     - null_check_on_nullable_type_parameter
     - null_closures
     - omit_obvious_local_variable_types
-    - one_member_abstracts
     - only_throw_errors
     - overridden_fields
     - package_names
@@ -151,10 +155,10 @@ linter:
     - type_literal_in_constant_pattern
     - unawaited_futures
     - unintended_html_in_doc_comment
-    - unnecessary_await_in_return
     - unnecessary_brace_in_string_interps
     - unnecessary_breaks
     - unnecessary_const
+    - unnecessary_const_in_enum_constructor
     - unnecessary_constructor_name
     - unnecessary_getters_setters
     - unnecessary_ignore
@@ -164,20 +168,24 @@ linter:
     - unnecessary_new
     - unnecessary_null_aware_assignments
     - unnecessary_null_aware_operator_on_extension_on_nullable
+    - unnecessary_null_checks
     - unnecessary_null_in_if_null_operators
     - unnecessary_nullable_for_final_variable_declarations
     - unnecessary_overrides
     - unnecessary_parenthesis
+    - unnecessary_primary_constructor_body
     - unnecessary_raw_strings
     - unnecessary_statements
     - unnecessary_string_escapes
     - unnecessary_string_interpolations
     - unnecessary_this
     - unnecessary_to_list_in_spreads
+    - unnecessary_type_name_in_constructor
     - unnecessary_unawaited
     - unnecessary_underscores
     - unrelated_type_equality_checks
     - unsafe_html
+    - use_declaring_parameters
     - use_enums
     - use_function_type_syntax_for_parameters
     - use_is_even_rather_than_modulo
