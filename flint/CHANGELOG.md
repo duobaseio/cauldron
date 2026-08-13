@@ -1,3 +1,8 @@
+## 2.16.1 (13/08/2026)
+
+Remove duplicate `no_runtimetype_tostring` entry.
+
+
 ## 2.16.0 (13/08/2026)
 This update focuses on lint rules introduced in Dart 3.13.0. It requires Dart 3.13.0 or above.
 

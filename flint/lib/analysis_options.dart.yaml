@@ -89,7 +89,6 @@ linter:
     - no_leading_underscores_for_local_identifiers
     - no_literal_bool_comparisons
     - no_raw_types
-    - no_runtimeType_toString
     - no_runtimetype_tostring
     - no_self_assignments
     - no_wildcard_variable_uses
