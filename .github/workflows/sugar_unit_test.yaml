@@ -41,8 +41,8 @@ jobs:
       - name: Install Java
         uses: actions/setup-java@v5
         with:
-          distribution: "adopt"
-          java-version: "11.0.26+4"
+          distribution: "temurin"
+          java-version: "17"
       - run: dart pub get
       - run: dart analyze --fatal-warnings
       - run: dart format . --set-exit-if-changed --output none

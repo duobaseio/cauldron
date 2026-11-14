@@ -1,4 +1,4 @@
-CURRENT_TIMEZONE=$(cat /etc/timezone)
+CURRENT_TIMEZONE=$(timedatectl show --property=Timezone --value)
 
 sudo timedatectl set-timezone "Asia/Tokyo"
 
@@ -23,5 +23,5 @@ dart run coverage:collect_coverage --wait-paused --uri=http://127.0.0.1:8181/ -o
 unset TZ
 
 
-dart run coverage:format_coverage --packages=.dart_tool/package_config.json --lcov -i coverage/coverage.json -o coverage/lcov.info
+dart run coverage:format_coverage --lcov -i coverage/coverage.json -o coverage/lcov.info
 sudo timedatectl set-timezone "$CURRENT_TIMEZONE"
