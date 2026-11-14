@@ -4,6 +4,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart' as p;
 
+/// The IANA timezone database version to generate. Both the embedded database and the JDK used to verify it in tests
+/// are pinned to this version so that they never drift apart.
+const _version = '2025a';
+
+/// The range of years with explicit timezone transitions. `tzc --large` otherwise defaults to `1800,<current year + 67>`,
+/// which makes the output depend on when the script is run.
+const _years = '1800,2092';
+
 void main(List<String> args) async {
   final javaHome = Platform.environment['JAVA_HOME'];
   if (javaHome == null) {
@@ -38,7 +46,13 @@ void main(List<String> args) async {
       exit(1);
     }
 
-    final updateTzdb = Process.runSync('java', ['-jar', 'tool/tzupdater.jar', '-f'], runInShell: true);
+    final updateTzdb = Process.runSync('java', [
+      '-jar',
+      'tool/tzupdater.jar',
+      '-l',
+      'https://data.iana.org/time-zones/releases/tzdata$_version.tar.gz',
+      '-f',
+    ], runInShell: true);
     if (updateTzdb.exitCode != 0) {
       print('Failed to update the timezone database');
       print(updateTzdb.stdout);
@@ -61,7 +75,7 @@ void main(List<String> args) async {
     print(npmCheckResult.stderr);
     exit(1);
   }
-  final installTubular = Process.runSync('npm', ['install', '-g', '@tubular/time-tzdb@1'], runInShell: true);
+  final installTubular = Process.runSync('npm', ['install', '-g', '@tubular/time-tzdb@1.2.6'], runInShell: true);
   if (installTubular.exitCode != 0) {
     print('Failed to install @tubular/time-tzdb');
     print(installTubular.stdout);
@@ -70,7 +84,16 @@ void main(List<String> args) async {
   }
 
   final timezoneDatabaseLocation = p.join(Directory.systemTemp.path, 'timezone.json');
-  final generateTubular = Process.runSync('npx', ['tzc', '--large', timezoneDatabaseLocation, '-o'], runInShell: true);
+  final generateTubular = Process.runSync('npx', [
+    'tzc',
+    '--large',
+    '-u',
+    _version,
+    '-y',
+    _years,
+    timezoneDatabaseLocation,
+    '-o',
+  ], runInShell: true);
   if (generateTubular.exitCode != 0) {
     print('Failed to generate Tubular timezone database');
     print(generateTubular.stdout);
@@ -80,8 +103,8 @@ void main(List<String> args) async {
   final timezoneContent = File(timezoneDatabaseLocation).readAsStringSync();
 
   final tzDb = jsonDecode(timezoneContent) as Map<String, dynamic>;
-  if (tzDb['version'] != '2025a') {
-    print('The timezone database is not up to date');
+  if (tzDb['version'] != _version) {
+    print('Expected timezone database version $_version, got ${tzDb['version']}');
     exit(1);
   }
   // Remove metadata from the timezone database
