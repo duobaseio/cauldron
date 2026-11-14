@@ -3,11 +3,6 @@ environment:
   sdk: ">=3.6.0 <4.0.0"
 workspace:
   - flint
-  - nitrogen
-  - nitrogen_flutter_svg
-  - nitrogen_lottie
-  - nitrogen_types
-  - stevia
   - sugar
 
 dev_dependencies:

@@ -12,12 +12,8 @@ It consolidates several micro-packages that provide bits and pieces of date-time
 
 ```YAML
 dependencies:
-  sugar: ^3.1.0
+  sugar: ^4.0.0
 ```
-
-## Nitrogen - Asset Generation
-
-Modern, type-safe generated bindings for accessing your Flutter assets. See the project's [readme](./nitrogen) for more information.
 
 ## Flint - Because Pedantic wasn't strict enough
 
@@ -27,5 +23,5 @@ Lint ruleset in our projects.
 
 ```YAML
 dev_dependencies:
-  flint: ^2.9.0
+  flint: ^2.17.0
 ```

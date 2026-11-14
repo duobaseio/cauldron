@@ -1,3 +1,10 @@
+## 2.17.0 (14/11/2026)
+This update requires Dart 3.14.0 or above.
+
+Core ruleset:
+- Add `unnecessary_null_checks`
+
+
 ## 2.16.2 (13/08/2026)
 
 Core ruleset:

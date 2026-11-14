@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 import 'package:sugar/src/time/zone/platform/windows_timezones.g.dart';
 
-// ignore_for_file: avoid_private_typedef_functions, camel_case_types, non_constant_identifier_names
+// ignore_for_file: camel_case_types, non_constant_identifier_names
 
 typedef _NativeGetDynamicTimeZoneInformation = Uint64 Function(Pointer<_DYNAMIC_TIME_ZONE_INFORMATION> pointer);
 typedef _DartGetDynamicTimeZoneInformation = int Function(Pointer<_DYNAMIC_TIME_ZONE_INFORMATION> pointer);

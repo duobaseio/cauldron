@@ -97,10 +97,11 @@ extension Equality on Never {
   @useResult
   static bool deep(Object? a, Object? b) => switch ((a, b)) {
     (_, _) when identical(a, b) => true,
-    (final List a, final List b) => _ordered(a, b),
-    (final Iterable a, final Iterable b) => _unordered(a, b),
+    (final List<Object?> a, final List<Object?> b) => _ordered(a, b),
+    (final Iterable<Object?> a, final Iterable<Object?> b) => _unordered(a, b),
     (Map(entries: final a), Map(entries: final b)) => _unordered(a, b),
-    (final MapEntry a, final MapEntry b) => deep(a.key, b.key) && deep(a.value, b.value),
+    (final MapEntry<Object?, Object?> a, final MapEntry<Object?, Object?> b) =>
+      deep(a.key, b.key) && deep(a.value, b.value),
     _ => a == b,
   };
 
@@ -170,9 +171,9 @@ extension HashCodes on Never {
   @Possible({StackOverflowError})
   @useResult
   static int deep(Object? value) => switch (value) {
-    List _ => _ordered(_list, value),
-    Set _ => _unordered(_set, value),
-    Iterable _ => _unordered(_iterable, value),
+    List<Object?> _ => _ordered(_list, value),
+    Set<Object?> _ => _unordered(_set, value),
+    Iterable<Object?> _ => _unordered(_iterable, value),
     Map(:final entries) => _unordered(_map, entries),
     MapEntry(:final key, :final value) => _ordered(_entry, [key, value]),
     _ => value.hashCode,
