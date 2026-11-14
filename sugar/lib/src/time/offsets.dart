@@ -85,7 +85,7 @@ final class LiteralOffset extends Offset {
 
 /// An [Offset] that validates its value at runtime-time.
 final class _Offset extends Offset {
-  /// Determines if the [microseconds] is within [range].
+  /// Determines if the [microseconds] is within [Offset.range].
   ///
   /// Throws a [RangeError] otherwise.
   ///
