@@ -12,10 +12,13 @@ Future<Set<String>> fetch() async {
 
   final response = parse((await get(remote)).body);
 
-  final rules = RegExp(r'<span[^>]*>(\w+)</span>')
-      .allMatches(response.getElementsByTagName('code').last.innerHtml)
-      .map((m) => m.group(1))
-      .skip(1)
+  // The page lists every rule in a YAML snippet, i.e. `linter:\n  rules:\n    - rule_name`.
+  final rules = response
+      .getElementsByTagName('code')
+      .map((code) => code.text)
+      .firstWhere((text) => text.trimLeft().startsWith('linter:'), orElse: () => '')
+      .split('\n')
+      .map((line) => RegExp(r'^\s*-\s*(\w+)\s*$').firstMatch(line)?.group(1))
       .whereType<String>()
       .toSet();
 
@@ -30,6 +33,7 @@ Future<(Set<String> released, Set<String> removed)> process(Set<String> remote) 
   final existing = <String>{...rules['linter']['rules'], ...rules['ignore']};
   final released = <String>{};
   final experimental = <String>{};
+  final unreleased = <String>{};
   final removed = <String>{};
 
   print('Checking rules. This might take awhile.');
@@ -41,26 +45,39 @@ Future<(Set<String> released, Set<String> removed)> process(Set<String> remote) 
       continue;
     }
 
-    final content = parse(response.body)
-        .getElementsByClassName('tags')[0]
-        .text;
-
-    if (existing.contains(rule) && (content.contains('Deprecated') || content.contains('Removed'))) {
-      removed.add(rule);
-    } else if (!existing.contains(rule) &&
-        !content.contains('Experimental') &&
-        !content.contains('Deprecated') &&
-        !content.contains('Removed')) {
-      released.add(rule);
+    final tags = parse(response.body).querySelectorAll('.tags .tag-label').map((tag) => tag.text).join(' ');
+    if (tags.isEmpty) {
+      print('Warning: unable to find tags for https://dart.dev/tools/linter-rules/$rule.');
+      continue;
     }
-    if (!existing.contains(rule) && content.contains('experimental')) {
+
+    final isRemoved = tags.contains('Deprecated') || tags.contains('Removed');
+    final isExperimental = tags.contains('Experimental');
+    final isUnreleased = tags.contains('Unreleased');
+
+    if (existing.contains(rule)) {
+      if (isRemoved) {
+        removed.add(rule);
+      }
+    } else if (isExperimental) {
       experimental.add(rule);
+    } else if (isUnreleased) {
+      unreleased.add(rule);
+    } else if (!isRemoved) {
+      released.add(rule);
     }
   }
 
   if (experimental.isNotEmpty) {
     print('The following rules are experimental:');
     for (final rule in experimental) {
+      print('https://dart.dev/tools/linter-rules/$rule');
+    }
+  }
+
+  if (unreleased.isNotEmpty) {
+    print('The following rules are unreleased:');
+    for (final rule in unreleased) {
       print('https://dart.dev/tools/linter-rules/$rule');
     }
   }

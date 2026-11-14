@@ -166,6 +166,7 @@ linter:
     - unnecessary_new
     - unnecessary_null_aware_assignments
     - unnecessary_null_aware_operator_on_extension_on_nullable
+    - unnecessary_null_checks
     - unnecessary_null_in_if_null_operators
     - unnecessary_nullable_for_final_variable_declarations
     - unnecessary_overrides
@@ -204,6 +205,7 @@ ignore:
   - always_declare_return_types
   - always_put_required_named_parameters
   - always_specify_types
+  - async_return_with_no_await
   - avoid_annotating_with_dynamic
   - avoid_classes_with_only_static_members
   - avoid_equals_and_hash_code_on_mutable_classes
@@ -216,6 +218,7 @@ ignore:
   - flutter_style_todos
   - lines_longer_than_80_chars
   - no_default_cases
+  - no_dynamic_casts
   - no_logic_in_create_state
   - omit_local_variable_types
   - omit_obvious_property_types

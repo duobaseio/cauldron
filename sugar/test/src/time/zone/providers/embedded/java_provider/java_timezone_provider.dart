@@ -5,7 +5,7 @@ import 'package:sugar/src/time/offset.dart';
 import 'package:sugar/src/time/temporal_unit.dart';
 import 'package:sugar/time_zone.dart';
 
-import 'bindings.dart';
+import 'bindings.dart' hide Duration;
 
 class JavaTimezoneProvider extends UnmodifiableMapBase<String, Timezone> {
   final _cache = <String, Timezone>{};
@@ -23,8 +23,8 @@ class JavaTimezoneProvider extends UnmodifiableMapBase<String, Timezone> {
   }
 
   @override
-  late final keys = ZoneId.getAvailableZoneIds()!.use(
-    (ids) => ids.map((element) => element?.toDartString(releaseOriginal: true)).nonNulls.toSet(),
+  late final keys = ZoneId.availableZoneIds!.use(
+    (ids) => ids.asDart().map((element) => element?.toDartString(releaseOriginal: true)).nonNulls.toSet(),
   );
 }
 
@@ -37,15 +37,15 @@ class JavaTimezone extends Timezone {
   TimezoneSpan span({required EpochMicroseconds at}) {
     final instant = Instant.ofEpochMilli(at ~/ 1000);
     final (offset, isDst, abbr) = ZonedDateTime.ofInstant(instant, _zoneId)!.use((zdt) {
-      final isDst = zdt.getOffset()!.use(
+      final isDst = zdt.offset!.use(
         (zoneOffset) =>
-            zoneOffset.getRules()!.use((zoneRules) => Instant.from(zdt)!.use((i) => zoneRules.isDaylightSavings(i))),
+            zoneOffset.rules!.use((zoneRules) => Instant.from(zdt)!.use((i) => zoneRules.isDaylightSavings(i))),
       );
       final abbr = 'zzz'
           .toJString()
           .use(DateTimeFormatter.ofPattern)!
           .use((f) => f.format(zdt)!.toDartString(releaseOriginal: true));
-      final offset = zdt.getOffset()!.use((p0) => p0.getTotalSeconds());
+      final offset = zdt.offset!.use((p0) => p0.totalSeconds);
       return (offset, isDst, abbr);
     });
     instant!.release();
@@ -55,7 +55,7 @@ class JavaTimezone extends Timezone {
   /// TODO: When we move this to the main library, we should remove
   /// this so that we don't have memory leaks. We should instead create
   /// a new zodeId object each time we need it.
-  late final _zoneId = JString.fromString(name).use(ZoneId.of$1)!;
+  late final _zoneId = name.toJString().use(ZoneId.of$1)!;
 
   @override
   (EpochMicroseconds, TimezoneSpan) convert(
@@ -71,7 +71,7 @@ class JavaTimezone extends Timezone {
     final nanoSeconds = (microsecond * 1000) + (millisecond * 1000000);
     final micros = ZonedDateTime.of$2(year, month, day, hour, minute, second, nanoSeconds, _zoneId)!.use(
       (zonedDateTime) =>
-          Instant.from(zonedDateTime)!.use((instant) => instant.getEpochSecond() * Duration.microsecondsPerSecond),
+          Instant.from(zonedDateTime)!.use((instant) => instant.epochSecond * Duration.microsecondsPerSecond),
     );
     return (micros, span(at: micros));
   }
